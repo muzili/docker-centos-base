@@ -1,19 +1,11 @@
 FROM centos:centos7
 MAINTAINER Joshua Lee <muzili@gmail.com>
 
-# Install EPEL repo.
-RUN yum -y install http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-2.noarch.rpm
-RUN yum -y upgrade
-
 # Install base stuff.
-RUN yum -y install \
-  bash-completion \
-  curl \
-  wget \
-  unzip
-
-# Clean up YUM when done.
-RUN yum clean all
+RUN yum -y install epel-release python-setuptools \
+  bash-completion curl wget unzip && \
+  easy_install supervisor && \
+  yum clean all
 
 # Create the sleleton 1st run
 ADD scripts /scripts
