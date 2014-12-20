@@ -4,6 +4,7 @@ MAINTAINER Joshua Lee <muzili@gmail.com>
 # Install base stuff.
 RUN yum -y install epel-release python-setuptools \
   bash-completion curl wget unzip && \
+  yum update -y && \
   easy_install supervisor && \
   yum clean all
 
