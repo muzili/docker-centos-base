@@ -20,10 +20,18 @@ RUN yum -y install epel-release wget curl unzip bash-completion && \
     easy_install supervisor && \
     yum clean all
 
-#Add confd to centos base
+
 ENV ETCD_NODE 172.17.42.1:4001
 ENV CONFD_VERSION 0.9.0
+ENV ETCD_VERSION 2.0.10
 
+#Add the etcd binary
+RUN wget --progress=bar:force --retry-connrefused -t 5  https://github.com/coreos/etcd/releases/download/v${ETCD_VERSION}/etcd-v${ETCD_VERSION}-linux-amd64.tar.gz -o etcd-v${ETCD_VERSION}-linux-amd64.tar.gz && \
+    tar xzvf etcd-v${ETCD_VERSION}-linux-amd64.tar.gz -C /tmp/ && \
+    cp /tmp/etcd-v${ETCD_VERSION}-linux-amd64/etcd* /usr/bin/ && \
+    rm -rf /tmp/etcd-v${ETCD_VERSION}-linux-amd64
+
+#Add confd to centos base
 RUN wget --progress=bar:force --retry-connrefused -t 5 http://github.com/kelseyhightower/confd/releases/\download/v${CONFD_VERSION}/confd-${CONFD_VERSION}-linux-amd64 -O /bin/confd && \
     chmod +x /bin/confd
 
