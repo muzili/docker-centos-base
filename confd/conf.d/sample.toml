@@ -1,0 +1,7 @@
+[template]
+src = "sample.tmpl"
+dest = "/tmp/sample.conf"
+keys = [
+    "/sample/database/url",
+    "/sample/database/user",
+]

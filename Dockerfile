@@ -20,6 +20,13 @@ RUN yum -y install epel-release wget curl unzip bash-completion && \
     easy_install supervisor && \
     yum clean all
 
+#Add confd to centos base
+ENV ETCD_NODE 172.17.42.1:4001
+ENV CONFD_VERSION 0.9.0
+
+RUN wget --progress=bar:force --retry-connrefused -t 5 http://github.com/kelseyhightower/confd/releases/\download/v${CONFD_VERSION}/confd-${CONFD_VERSION}-linux-amd64 -O /bin/confd && \
+    chmod +x /bin/confd
+
 # Create the sleleton 1st run
 ADD scripts /scripts
 RUN chmod +x /scripts/start.sh

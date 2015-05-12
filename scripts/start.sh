@@ -6,6 +6,24 @@ set -e
 
 LOG_DIR=/var/log
 
+echo "booting container. ETCD: $ETCD_NODE"
+
+function config_fail()
+{
+    echo "Failed to start due to config error"
+    exit -1
+}
+
+# Loop until confd has updated the default config
+n=0
+until confd -onetime -node "$ETCD_NODE"; do
+    if [ "$n" -eq "4" ];  then config_fail; fi
+    echo "waiting for confd to refresh configurations"
+    n=$((n+1))
+    sleep $n
+done
+
+
 if [[ -e /first_run ]]; then
     source /scripts/first_run.sh
 else
@@ -14,3 +32,5 @@ fi
 
 pre_start_action
 post_start_action
+
+exec supervisord
