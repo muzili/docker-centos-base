@@ -34,10 +34,11 @@ RUN wget --progress=bar:force --retry-connrefused -t 5  https://github.com/coreo
 #Add confd to centos base
 RUN wget --progress=bar:force --retry-connrefused -t 5 http://github.com/kelseyhightower/confd/releases/\download/v${CONFD_VERSION}/confd-${CONFD_VERSION}-linux-amd64 -O /bin/confd && \
     chmod +x /bin/confd
+ADD confd /etc/confd
 
 # Create the sleleton 1st run
 ADD scripts /scripts
-RUN chmod +x /scripts/start.sh
+RUN chmod +x /scripts/start.sh && touch /first_run
 
 # Expose our web root and log directories log.
 VOLUME ["/var/log"]
