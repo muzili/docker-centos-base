@@ -26,7 +26,7 @@ ENV CONFD_VERSION 0.9.0
 ENV ETCD_VERSION 2.0.10
 
 #Add the etcd binary
-RUN wget --progress=bar:force --retry-connrefused -t 5  https://github.com/coreos/etcd/releases/download/v${ETCD_VERSION}/etcd-v${ETCD_VERSION}-linux-amd64.tar.gz -o etcd-v${ETCD_VERSION}-linux-amd64.tar.gz && \
+RUN wget --progress=bar:force --retry-connrefused -t 5  https://github.com/coreos/etcd/releases/download/v${ETCD_VERSION}/etcd-v${ETCD_VERSION}-linux-amd64.tar.gz -O etcd-v${ETCD_VERSION}-linux-amd64.tar.gz && \
     tar xzvf etcd-v${ETCD_VERSION}-linux-amd64.tar.gz -C /tmp/ && \
     cp /tmp/etcd-v${ETCD_VERSION}-linux-amd64/etcd* /usr/bin/ && \
     rm -rf /tmp/etcd-v${ETCD_VERSION}-linux-amd64
