@@ -8,16 +8,13 @@ LOG_DIR=/var/log
 
 echo "booting container. ETCD: $ETCD_NODE"
 
-function config_fail()
-{
-    echo "Failed to start due to config error"
-    exit -1
-}
-
 # Loop until confd has updated the default config
 n=0
 until confd -onetime -node "$ETCD_NODE"; do
-    if [ "$n" -eq "4" ];  then config_fail; fi
+    if [ "$n" -eq "4" ];  then
+        echo "Failed to start due to config error"
+        break;
+    fi
     echo "waiting for confd to refresh configurations"
     n=$((n+1))
     sleep $n
