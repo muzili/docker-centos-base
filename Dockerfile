@@ -7,6 +7,7 @@ RUN yum -y install epel-release && \
     rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm && \
     yum update -y && \
     yum -y install python-setuptools wget curl tar gzip unzip bash-completion && \
+    yum -y install postfix cyrus-sasl-plain cyrus-sasl-md5 && \
     easy_install supervisor && \
     yum clean all
 
@@ -30,7 +31,9 @@ ADD scripts /scripts
 RUN chmod +x /scripts/start.sh && touch /first_run
 
 # Expose our web root and log directories log.
-VOLUME ["/var/log"]
+VOLUME ["/var/log", "/data"]
+
+EXPOSE 25
 
 # Kicking in
 CMD ["/scripts/start.sh"]

@@ -4,7 +4,12 @@
 # Stop on error
 set -e
 
+DATA_DIR=/data
 LOG_DIR=/var/log
+
+for f in `ls /scripts/functions/*.sh`; do
+  . $f
+done
 
 echo "booting container. ETCD: $ETCD_NODE"
 
